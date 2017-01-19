@@ -3,5 +3,5 @@ class
 
   draw: =>
     with lg
-      .setColor 0, 255, 0
-      .rectangle "fill", @x, @y, @w, @h
+      .setColor 255, 255, 255
+      .draw game.sprites.block[0], @x, @y

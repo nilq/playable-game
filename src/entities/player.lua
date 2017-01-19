@@ -75,8 +75,8 @@ do
     draw = function(self)
       do
         local _with_0 = lg
-        _with_0.setColor(255, 0, 0)
-        _with_0.rectangle("fill", self.x, self.y, self.w, self.h)
+        _with_0.setColor(255, 255, 255)
+        _with_0.draw(game.sprites.player[0], self.x, self.y)
         return _with_0
       end
     end
@@ -85,14 +85,14 @@ do
   _class_0 = setmetatable({
     __init = function(self, x, y, w, h)
       self.x, self.y, self.w, self.h = x, y, w, h
-      self.acc = 10
+      self.acc = 14
       self.dx = 0
       self.dy = 0
       self.frc_x = 0.35
       self.frc_y = 2
       self.gravity = 30
       self.grounded = false
-      self.jump_force = 7
+      self.jump_force = 8
       self.keys = {
         ["right"] = "right",
         ["left"] = "left",
@@ -100,8 +100,8 @@ do
       }
       self.wall = 0
       self.wall_jump = {
-        x = 6,
-        y = 5
+        x = 8,
+        y = 7
       }
     end,
     __base = _base_0,

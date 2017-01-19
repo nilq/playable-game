@@ -1,4 +1,5 @@
 gamera = require("framework/dep/gamera")
+lg.setBackgroundColor(255, 255, 255)
 game = {
   game_objects = { },
   map_stuff = {
@@ -32,13 +33,25 @@ game = {
 game.initialize_assets = function()
   do
     game.sprites = { }
+  end
+  do
+    local _with_0 = game.sprites
+    _with_0.player = {
+      [0] = lg.newImage("assets/player/stand.png")
+    }
+    _with_0.block = {
+      [0] = lg.newImage("assets/block/redish.png")
+    }
+  end
+  do
+    game.grid_size = game.sprites.block[0]:getWidth()
     return game
   end
 end
+game.initialize_assets()
 game.load = function()
   do
     game.game_objects = { }
-    game.initialize_assets()
     game.camera = gamera.new(0, 0, love.graphics.getWidth(), love.graphics.getHeight())
     game.camera:setWindow(0, 0, love.graphics.getWidth(), love.graphics.getHeight())
     game.camera:setScale(3)
@@ -126,23 +139,23 @@ game.make_entity = function(id, x, y)
   end
   local _exp_0 = id
   if "player" == _exp_0 then
-    local player = Player(x, y, 16, 16)
+    local player = Player(x, y, game.sprites.player[0]:getWidth(), game.sprites.player[0]:getHeight())
     game.player = player
     table.insert(game.game_objects, player)
     world:add(player, player.x, player.y, player.w, player.h)
     return player
   elseif "block" == _exp_0 then
-    local block = Block(x, y, 16, 16)
+    local block = Block(x, y, game.sprites.block[0]:getWidth(), game.sprites.block[0]:getHeight())
     table.insert(game.game_objects, block)
     world:add(block, block.x, block.y, block.w, block.h)
     return block
   elseif "jump" == _exp_0 then
-    local jump = Jump(x, y, 16, 16)
+    local jump = Jump(x, y, game.sprites.block[0]:getWidth(), game.sprites.block[0]:getHeight())
     table.insert(game.game_objects, jump)
     world:add(jump, jump.x, jump.y, jump.w, jump.h)
     return jump
   elseif "enemy" == _exp_0 then
-    local enemy = Enemy(x, y, 16, 16)
+    local enemy = Enemy(x, y, game.sprites.block[0]:getWidth(), game.sprites.block[0]:getHeight())
     table.insert(game.game_objects, enemy)
     world:add(enemy, enemy.x, enemy.y, enemy.w, enemy.h)
     return enemy

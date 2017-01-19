@@ -4,8 +4,8 @@ do
     draw = function(self)
       do
         local _with_0 = lg
-        _with_0.setColor(0, 255, 0)
-        _with_0.rectangle("fill", self.x, self.y, self.w, self.h)
+        _with_0.setColor(255, 255, 255)
+        _with_0.draw(game.sprites.block[0], self.x, self.y)
         return _with_0
       end
     end

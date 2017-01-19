@@ -1,5 +1,7 @@
 export gamera = require "framework/dep/gamera"
 
+lg.setBackgroundColor 255, 255, 255
+
 export game = {
   game_objects: {}
 
@@ -22,11 +24,23 @@ game.initialize_assets = ->
   with game
     .sprites = {}
 
+  with game.sprites
+    .player = {
+      [0]: lg.newImage "assets/player/stand.png"
+    }
+
+    .block = {
+      [0]: lg.newImage "assets/block/redish.png"
+    }
+
+  with game
+    .grid_size = .sprites.block[0]\getWidth!
+
+game.initialize_assets!
+
 game.load = ->
   with game
     .game_objects = {}
-
-    .initialize_assets!
 
     .camera = gamera.new 0, 0, love.graphics.getWidth!, love.graphics.getHeight!
     .camera\setWindow 0, 0, love.graphics.getWidth!, love.graphics.getHeight!
@@ -71,7 +85,7 @@ game.make_entity = (id, x, y) ->
 
   switch id
     when "player"
-      player = Player x, y, 16, 16
+      player = Player x, y, game.sprites.player[0]\getWidth!, game.sprites.player[0]\getHeight!
       ----------------------------------
       -- do things with player here ...
       ----------------------------------
@@ -83,7 +97,7 @@ game.make_entity = (id, x, y) ->
       return player
 
     when "block"
-      block = Block x, y, 16, 16
+      block = Block x, y, game.sprites.block[0]\getWidth!, game.sprites.block[0]\getHeight!
       table.insert game.game_objects, block
 
       world\add block, block.x, block.y, block.w, block.h
@@ -91,7 +105,7 @@ game.make_entity = (id, x, y) ->
       return block
 
     when "jump"
-      jump = Jump x, y, 16, 16
+      jump = Jump x, y, game.sprites.block[0]\getWidth!, game.sprites.block[0]\getHeight!
       table.insert game.game_objects, jump
 
       world\add jump, jump.x, jump.y, jump.w, jump.h
@@ -99,7 +113,7 @@ game.make_entity = (id, x, y) ->
       return jump
 
     when "enemy"
-      enemy = Enemy x, y, 16, 16
+      enemy = Enemy x, y, game.sprites.block[0]\getWidth!, game.sprites.block[0]\getHeight!
       table.insert game.game_objects, enemy
 
       world\add enemy, enemy.x, enemy.y, enemy.w, enemy.h

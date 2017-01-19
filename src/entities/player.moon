@@ -1,6 +1,6 @@
 class
   new: (@x, @y, @w, @h) =>
-    @acc = 10
+    @acc = 14
 
     @dx = 0
     @dy = 0
@@ -11,7 +11,7 @@ class
     @gravity  = 30
     @grounded = false
 
-    @jump_force = 7
+    @jump_force = 8
 
     @keys = {
       "right": "right"
@@ -21,8 +21,8 @@ class
 
     @wall = 0
     @wall_jump = {
-      x: 6
-      y: 5
+      x: 8
+      y: 7
     }
 
   update: (dt) =>
@@ -84,5 +84,5 @@ class
 
   draw: =>
     with lg
-      .setColor 255, 0, 0
-      .rectangle "fill", @x, @y, @w, @h
+      .setColor 255, 255, 255
+      .draw game.sprites.player[0], @x, @y
