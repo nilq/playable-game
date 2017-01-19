@@ -1,10 +1,12 @@
 ----------------------------------
 -- requirenments
 ----------------------------------
-path = "framework/"
+path = "framework/dep/"
 
 export state = require path .. "state"
 export bump  = require path .. "bump"
+
+export world = bump.newWorld!
 
 export lg = love.graphics
 
@@ -20,6 +22,8 @@ love.run = ->
   load.load!                       if love.load
   love.timer.step!                 if love.timer
 
+  state\switch "src/game"
+
   while true
     update_timer += dt
 
@@ -28,7 +32,7 @@ love.run = ->
 
       for name, a, b, c, d, e, f in love.event.poll!
         if name == "quit"
-          unless love.quit or not love.quit!
+          if not love.quit or not love.quit!
             return a
 
         love.handlers[name] a, b, c, d, e, f

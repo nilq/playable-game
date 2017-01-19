@@ -1,6 +1,7 @@
-local path = "framework/"
+local path = "framework/dep/"
 state = require(path .. "state")
 bump = require(path .. "bump")
+world = bump.newWorld()
 lg = love.graphics
 lg.setDefaultFilter("nearest", "nearest")
 love.run = function()
@@ -16,13 +17,14 @@ love.run = function()
   if love.timer then
     love.timer.step()
   end
+  state:switch("src/game")
   while true do
     update_timer = update_timer + dt
     if love.event then
       love.event.pump()
       for name, a, b, c, d, e, f in love.event.poll() do
         if name == "quit" then
-          if not (love.quit or not love.quit()) then
+          if not love.quit or not love.quit() then
             return a
           end
         end
