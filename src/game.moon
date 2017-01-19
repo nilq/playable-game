@@ -87,4 +87,11 @@ game.make_entity = (id, x, y) ->
       world\add block, block.x, block.y, block.w, block.h
 
       return block
+
+love.keypressed = (key, isrepeat) ->
+  with game
+    for g in *.game_objects
+      continue if g == nil
+      g\press key if g.press
+
 game

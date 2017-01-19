@@ -128,4 +128,27 @@ game.make_entity = function(id, x, y)
     return block
   end
 end
+love.keypressed = function(key, isrepeat)
+  do
+    local _list_0 = game.game_objects
+    for _index_0 = 1, #_list_0 do
+      local _continue_0 = false
+      repeat
+        local g = _list_0[_index_0]
+        if g == nil then
+          _continue_0 = true
+          break
+        end
+        if g.press then
+          g:press(key)
+        end
+        _continue_0 = true
+      until true
+      if not _continue_0 then
+        break
+      end
+    end
+    return game
+  end
+end
 return game
