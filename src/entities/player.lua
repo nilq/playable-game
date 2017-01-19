@@ -33,6 +33,12 @@ do
               self.wall = _with_0.x
             end
           end
+          local dx, dy
+          if c.other.apply then
+            dx, dy = c.other.apply()
+          end
+          self.dx = dx or self.dx
+          self.dy = dy or self.dy
         end
       end
       if game.noob then
@@ -40,6 +46,7 @@ do
         self.dy = self.dy + (self.gravity * 0.75 * dt)
       else
         self.dy = self.dy + (self.gravity * dt)
+        self.dx = self.dx - (self.wall * dt * 0.05)
       end
       do
         local _with_0 = game
@@ -85,7 +92,7 @@ do
       self.frc_y = 2
       self.gravity = 30
       self.grounded = false
-      self.jump_force = 8
+      self.jump_force = 7
       self.keys = {
         ["right"] = "right",
         ["left"] = "left",

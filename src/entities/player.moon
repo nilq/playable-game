@@ -11,7 +11,7 @@ class
     @gravity  = 30
     @grounded = false
 
-    @jump_force = 5
+    @jump_force = 7
 
     @keys = {
       "right": "right"
@@ -45,10 +45,16 @@ class
         unless .y == 0
           if .y == -1
             @grounded = true
+
           @dy = 0
         unless .x == 0
           @dx = 0
           @wall = .x unless @grounded
+
+        dx, dy = c.other.apply! if c.other.apply
+
+        @dx = dx or @dx
+        @dy = dy or @dy
 
     ----------------------------------
     -- noob
@@ -58,6 +64,7 @@ class
       @dy += @gravity * 0.75 * dt
     else
       @dy += @gravity * dt
+      @dx -= @wall * dt * 0.05
 
     with game
       ww, wy, ww, wh = .camera\getWorld!

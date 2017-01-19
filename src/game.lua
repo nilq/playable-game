@@ -11,6 +11,16 @@ game = {
       r = 0,
       g = 0,
       b = 0
+    },
+    ["jump"] = {
+      r = 0,
+      g = 0,
+      b = 255
+    },
+    ["enemy"] = {
+      r = 0,
+      g = 255,
+      b = 255
     }
   },
   grid_size = 16,
@@ -109,10 +119,10 @@ game.load_level = function(path)
   end
 end
 game.make_entity = function(id, x, y)
-  local Player, Block
+  local Player, Block, Jump, Enemy
   do
     local _obj_0 = require("src/entities")
-    Player, Block = _obj_0.Player, _obj_0.Block
+    Player, Block, Jump, Enemy = _obj_0.Player, _obj_0.Block, _obj_0.Jump, _obj_0.Enemy
   end
   local _exp_0 = id
   if "player" == _exp_0 then
@@ -126,6 +136,16 @@ game.make_entity = function(id, x, y)
     table.insert(game.game_objects, block)
     world:add(block, block.x, block.y, block.w, block.h)
     return block
+  elseif "jump" == _exp_0 then
+    local jump = Jump(x, y, 16, 16)
+    table.insert(game.game_objects, jump)
+    world:add(jump, jump.x, jump.y, jump.w, jump.h)
+    return jump
+  elseif "enemy" == _exp_0 then
+    local enemy = Enemy(x, y, 16, 16)
+    table.insert(game.game_objects, enemy)
+    world:add(enemy, enemy.x, enemy.y, enemy.w, enemy.h)
+    return enemy
   end
 end
 love.keypressed = function(key, isrepeat)

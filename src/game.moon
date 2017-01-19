@@ -6,6 +6,8 @@ export game = {
   map_stuff: {
     "player": {r: 255, g: 0,   b: 0}
     "block":  {r: 0,   g: 0,   b: 0}
+    "jump":   {r: 0,   g: 0,   b: 255}
+    "enemy":  {r: 0,   g: 255, b: 255}
   }
 
   grid_size: 16
@@ -65,7 +67,7 @@ game.load_level = (path) ->
             .make_entity k, .grid_size * rx, .grid_size * ry
 
 game.make_entity = (id, x, y) ->
-  import Player, Block from require "src/entities"
+  import Player, Block, Jump, Enemy from require "src/entities"
 
   switch id
     when "player"
@@ -87,6 +89,22 @@ game.make_entity = (id, x, y) ->
       world\add block, block.x, block.y, block.w, block.h
 
       return block
+
+    when "jump"
+      jump = Jump x, y, 16, 16
+      table.insert game.game_objects, jump
+
+      world\add jump, jump.x, jump.y, jump.w, jump.h
+
+      return jump
+
+    when "enemy"
+      enemy = Enemy x, y, 16, 16
+      table.insert game.game_objects, enemy
+
+      world\add enemy, enemy.x, enemy.y, enemy.w, enemy.h
+
+      return enemy
 
 love.keypressed = (key, isrepeat) ->
   with game
